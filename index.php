@@ -9,7 +9,7 @@ $auswahl = "id";
 
 if(isset($_POST['eintragen'])){
   
-  if(empty($_POST['name']) || empty($_POST['telefon'])){
+  if(empty($_POST['name']) || empty($_POST['phone'])){
  
   $meldung = "Bitte geben Sie die notwendigen Kontaktdaten ein!";
   
@@ -17,21 +17,23 @@ if(isset($_POST['eintragen'])){
   else{
   
       $name = $_POST['name'];
-      $vorname = $_POST['vorname'];
-      $telefon = $_POST['telefon'];
+      $company = $_POST['company'];
+      $phone = $_POST['phone'];
+      $tviewer = $_POST['tviewer'];
+      $comment = $_POST['comment'];
       $email = $_POST['email'];
   
-  $eintragen = mysql_query("INSERT INTO telefonbuch SET 
+  $eintragen = mysql_query("INSERT INTO phonebook SET 
                                  name = '".$name."', 
-                                 vorname = '".$vorname."', 
-                                 telefon = '".$telefon."',
+                                 company = '".$company."', 
+                                 phone = '".$phone."',
                                  email = '".$email."'
                                  ");
 }
 }
 
     if(isset($_GET['aktion'])){
-     $job = mysql_query("DELETE FROM telefonbuch WHERE id = '".$_GET['objekt']."' ");
+     $job = mysql_query("DELETE FROM phonebook WHERE id = '".$_GET['objekt']."' ");
       }
       
     if(isset($_GET['auswahl'])){
@@ -50,19 +52,19 @@ if(isset($_POST['eintragen'])){
 
 <?php
 
-$anzeigen = mysql_query("SELECT * FROM telefonbuch ORDER BY ".$auswahl."");
+$anzeigen = mysql_query("SELECT * FROM phonebook ORDER BY ".$auswahl."");
 
 echo "<table id='tabelle_ausgabe' border='1'>";
 echo "<tr>";
-echo "<th>Name</th><th>Vorname</th><th>Telefon</th><th>Email</th>";
+echo "<th>Name</th><th>company</th><th>phone</th><th>Email</th>";
 echo "<th>entfernen</th>";
 echo "<th>";
 echo "<form method='get' action='".$_SERVER['PHP_SELF']."'>";
 echo "<select name='auswahl'>";
 echo "<option value='id'>sortieren nach:</option>";
 echo "<option value='name'>Name</option>";
-echo "<option value='vorname'>Vorname</option>";
-echo "<option value='telefon'>Telefon</option>";
+echo "<option value='company'>company</option>";
+echo "<option value='phone'>phone</option>";
 echo "<option value='email'>Email</option>";
 echo "</select>"; 
 echo "</th>";
@@ -75,8 +77,8 @@ echo "</tr>";
 while($ausgabe = mysql_fetch_array($anzeigen)){
     echo "<tr>";
     echo "<td>".$ausgabe['name']."</td>";
-    echo "<td>".$ausgabe['vorname']."</td>";
-    echo "<td>".$ausgabe['telefon']."</td>";
+    echo "<td>".$ausgabe['company']."</td>";
+    echo "<td>".$ausgabe['phone']."</td>";
     echo "<td>".$ausgabe['email']."</td>";
     echo "<td><a href='".$_SERVER['PHP_SELF']."?aktion=delete&objekt=".$ausgabe['id']."'>entfernen</a></td><td>&nbsp;</td><td>&nbsp;</td>";
     echo "</tr>";
@@ -95,12 +97,12 @@ echo "</table>";
 <td><input type="text" name="name"></td>
 </tr>
 <tr>
-<td><label for="vorname">Vorname:</label></td>
-<td><input type="text" name="vorname"></td>
+<td><label for="company">company:</label></td>
+<td><input type="text" name="company"></td>
 </tr>
 <tr> 
-<td><label for="telefon">Telefon:</label></td>
-<td><input type="text" name="telefon"></td>
+<td><label for="phone">Telefon:</label></td>
+<td><input type="text" name="phone"></td>
 </tr>
 <tr> 
 <td><label for="email">Email:</label></td>
